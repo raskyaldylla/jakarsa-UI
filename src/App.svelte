@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	export let name: string;
 </script>
 
@@ -7,8 +7,8 @@
 	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 </main>
 
-<style lang="pcss">
+<style>
 	h1 {
-		@apply text-red-400 font-black;
+		@apply font-title text-secondary font-black;
 	}
 </style>
