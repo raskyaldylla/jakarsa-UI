@@ -1,49 +1,62 @@
 <script>
+import {fade} from "svelte/transition"
 import Navbar from "./Components/Navbar.svelte";
+import Navigation from "./Components/Navigation.svelte";
+import { swipeControl } from "./Scripts/actions";
 import { sectionState } from "./Scripts/enum";
+import About from "./Sections/About.svelte";
+import Contact from "./Sections/Contact.svelte";
+import Home from "./Sections/Home.svelte";
+import Services from "./Sections/Services.svelte";
+import { sectionStore } from "./stores";
 
-let sw_prevY: number;
-let section: sectionState = sectionState.HOME;
-function swipeControl(e) {
-	let changedTouch = 0;
-	let eventType = e.type;
-	const distance = 50;
-	let direction: string;
-	const sectionSize = Object.entries(sectionState).length/2;
-	if(eventType === 'touchstart' || eventType === 'touchend') changedTouch = e.changedTouches[0].clientY
-	else if(eventType === 'mousedown' || eventType === 'mouseup') changedTouch = e.clientY
-
-	if(sw_prevY - distance > changedTouch) direction = "up";
-	if(sw_prevY + distance < changedTouch) direction = "down";
-
-	if(eventType === 'touchstart' || eventType === 'mousedown') sw_prevY = changedTouch
-	if(eventType === 'touchend' || eventType === 'mouseup') {
-		if(direction === "up" && section < sectionSize - 1) section++
-		if(direction === "down" && section > 0) section--;
-	}
-}
-
-$: {
-	console.log({section})
-}
 </script>
 
-<main>
+<main use:swipeControl={$sectionStore}>
 	<div class="w-screen h-screen relative overflow-hidden">
-		<div class="absolute w-full h-full left-0 top-0 bg-center bg-no-repeat bg-cover" style="background-image: url('/bg_1.jpg'); z-index: -1"></div>
+		<div class="main-bg {$sectionStore === sectionState.HOME ? "active": ""}" style="background-image: url('/bg_1.jpg')"></div>
+		<div class="main-bg bg-white {$sectionStore === sectionState.ABOUT ? "active": ""}"></div>
+		<div class="main-bg {$sectionStore === sectionState.SERVICES ? "active": ""}" style="background-image: url('/bg_2.jpg')"></div>
+		<div class="main-bg bg-secondary {$sectionStore === sectionState.CONTACT ? "active": ""}"></div>
 		
 		<Navbar></Navbar>
-		<div class="content-height" on:mousedown={swipeControl} on:touchstart={swipeControl} on:mouseup={swipeControl} on:touchend={swipeControl}>
-			<div class="p-8 h-full w-full md:w-3/4 mx-auto flex flex-no-wrap flex-col justify-center items-center text-left">
-				<h2 class="text-3xl font-title font-black leading-tight">We are the new kids on the block. A <b class="text-primary-light">Disruptor</b>, a new challenger, your friendly partner.</h2>
-				<p>Praesent commodo mi eu efficitur ultricies. Nam congue consectetur augue. Maecenas rhoncus scelerisque leo, vitae efficitur nunc iaculis non. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-			</div>
+		<div class="content-height">
+			{#if $sectionStore === sectionState.HOME}
+			<section transition:fade={{duration: 150}}>
+				<Home></Home>
+			</section>
+			{:else if $sectionStore === sectionState.ABOUT}
+			<section transition:fade={{duration: 150}}>
+				<About></About>
+			</section>
+			{:else if $sectionStore === sectionState.SERVICES}
+			<section transition:fade={{duration: 150}}>
+				<Services></Services>
+			</section>
+			{:else if $sectionStore === sectionState.CONTACT}
+			<section transition:fade={{duration: 150}}>
+				<Contact></Contact>
+			</section>
+			{/if}
 		</div>
+
+		<Navigation></Navigation>
 	</div>
 </main>
 
 <style>
 	.content-height {
-		height: calc(100% - 90px);
+		@apply relative;
+		height: calc(100% - 185px);
+	}
+	section {
+		@apply absolute left-0 top-0 h-full w-full;
+	}
+	div.main-bg {
+		@apply absolute w-full h-full left-0 top-0 bg-center bg-no-repeat bg-cover transition-all duration-150 ease-in-out opacity-0;
+		z-index: -1;
+	}
+	div.main-bg.active {
+		@apply opacity-100;
 	}
 </style>
