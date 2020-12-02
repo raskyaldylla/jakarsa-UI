@@ -2,9 +2,9 @@
 
 <div class="p-8 h-full w-full">
   <div class="flex flex-no-wrap flex-col md:flex-row w-full h-full items-center justify-center">
-    <div class="w-full h-full md:order-last">
-      <figure class="p-8 h-full">
-        <img class="object-contain h-full mx-auto" src="./sample-team.svg" alt="team">
+    <div class="w-full md:order-last">
+      <figure class="p-8 w-full">
+        <img class="object-contain mx-auto" src="./sample-team.jpg" alt="team">
       </figure>
     </div>
     <div class="w-full">
