@@ -11,10 +11,12 @@ export function swipeControl(node, section:sectionState) {
   node.addEventListener("touchend", handleSwipeControl)
 
   let sw_prevY: number;
+  let prevts: number;
   function handleSwipeControl(e) {
     let changedTouch = 0;
     let eventType = e.type;
     const distance = 35;
+    const diffConstants = 150;
     let direction: string;
     const sectionSize = Object.entries(sectionState).length/2;
     if(eventType === 'touchstart' || eventType === 'touchend') changedTouch = e.changedTouches[0].clientY
@@ -23,13 +25,19 @@ export function swipeControl(node, section:sectionState) {
     if(sw_prevY - distance > changedTouch) direction = "up";
     if(sw_prevY + distance < changedTouch) direction = "down";
 
-    if(eventType === 'touchstart' || eventType === 'mousedown') sw_prevY = changedTouch
+    if(eventType === 'touchstart' || eventType === 'mousedown') {
+      sw_prevY = changedTouch
+      prevts = Date.now()
+    }
     if(eventType === 'touchend' || eventType === 'mouseup') {
-      if(direction === "up" && section < sectionSize - 1) {
-        sectionStore.update((): sectionState => section + 1)
-      }
-      if(direction === "down" && section > 0) {
-        sectionStore.update((): sectionState => section - 1)
+      let diffts = Date.now() - prevts
+      if(diffts < diffConstants) {
+        if(direction === "up" && section < sectionSize - 1) {
+          sectionStore.update((): sectionState => section + 1)
+        }
+        if(direction === "down" && section > 0) {
+          sectionStore.update((): sectionState => section - 1)
+        }
       }
     }
   }
