@@ -103,3 +103,15 @@ import Icons from "../Components/Icons.svelte";
   </article>
   {/if}
 </div>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    @apply h-1;
+  }
+  .no-scrollbar::-webkit-scrollbar-track {
+    @apply h-1 bg-transparent;
+  }
+  .no-scrollbar::-webkit-scrollbar-thumb {
+    @apply h-1 bg-white rounded-full;
+  }
+</style>
