@@ -5,6 +5,7 @@ import Navigation from "./Components/Navigation.svelte";
 import { swipeControl } from "./Scripts/actions";
 import { sectionState } from "./Scripts/enum";
 import About from "./Sections/About.svelte";
+import Commodities from "./Sections/Commodities.svelte";
 import Contact from "./Sections/Contact.svelte";
 import Home from "./Sections/Home.svelte";
 import Services from "./Sections/Services.svelte";
@@ -28,6 +29,10 @@ import { sectionStore } from "./stores";
 			{:else if $sectionStore === sectionState.ABOUT}
 			<section transition:fade={{duration: 150}}>
 				<About></About>
+			</section>
+			{:else if $sectionStore === sectionState.COMMODITIES}
+			<section transition:fade={{duration: 150}}>
+				<Commodities></Commodities>
 			</section>
 			{:else if $sectionStore === sectionState.SERVICES}
 			<section transition:fade={{duration: 150}}>
