@@ -7,6 +7,7 @@ export enum logoState {
 export enum sectionState {
   HOME,
   ABOUT,
+  COMMODITIES,
   SERVICES,
   CONTACT
 }

@@ -29,6 +29,7 @@ function goto(section: sectionState) {
       </div>
       <div class="md:flex hidden flex-no-wrap justify-around items-center text-gray-800">
         <div class="button {__logoState === logoState.WHITE ? "text-white" : ""}" on:click={() => goto(sectionState.ABOUT)}>About</div>
+        <div class="button {__logoState === logoState.WHITE ? "text-white" : ""}" on:click={() => goto(sectionState.COMMODITIES)}>Commodities</div>
         <div class="button {__logoState === logoState.WHITE ? "text-white" : ""}" on:click={() => goto(sectionState.SERVICES)}>Services</div>
         <div class="button {__logoState === logoState.WHITE ? "text-white" : ""}" on:click={() => goto(sectionState.CONTACT)}>Contacts</div>
       </div>
@@ -43,6 +44,7 @@ function goto(section: sectionState) {
     </figure>
     <hr class="w-full">
     <div class="button" on:click={() => goto(sectionState.ABOUT)}>About</div>
+    <div class="button" on:click={() => goto(sectionState.COMMODITIES)}>Commodities</div>
     <div class="button" on:click={() => goto(sectionState.SERVICES)}>Services</div>
     <div class="button" on:click={() => goto(sectionState.CONTACT)}>Contacts</div>
   </div>
